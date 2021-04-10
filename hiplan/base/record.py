@@ -1,9 +1,13 @@
+from hiplan.base.task.py import Task
+from hiplan.base.priority.py import Priority
+from typing import List
+
 class Record:
     def __init__(self, name = "Untitled", tasks = None, labels = None, progress_items = None, priority = Priority.NONE):
         self.name = name
         self.tasks: List[Task] = tasks or []
-        self.labels: List[Label] = labels or []
-        self.progress_items: List[ProgressItem] = progress_items or []
+        self.labels: List["Label"] = labels or []
+        self.progress_items: List["ProgressItem"] = progress_items or []
         self.priority: Priority = priority
 
     def add_tasks(self, task: Task = None):

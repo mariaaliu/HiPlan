@@ -1,3 +1,6 @@
+from hiplan.base.member import Member
+from hiplan.base.record import Record
+from typing import List
 
 class Board:
     def __init__(self, name = "Untitled", records = None, description = "", members = None):

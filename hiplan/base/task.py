@@ -1,3 +1,6 @@
+from hiplan.base.member.py import Member
+from typing import List
+
 class Task:
     def __init__(self, title = "No title", description = '', deadline = None, members = None, goals = None, labels = None):
         self.title = title
