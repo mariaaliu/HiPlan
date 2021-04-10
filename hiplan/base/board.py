@@ -1,3 +1,4 @@
+
 class Board:
     def __init__(self, name = "Untitled", records = None, description = "", members = None):
         self.name = name
