@@ -1,5 +1,5 @@
-from hiplan.base.task.py import Task
-from hiplan.base.priority.py import Priority
+from hiplan.base.task import Task
+from hiplan.base.priority import Priority
 from typing import List
 
 class Record:

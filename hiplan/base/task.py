@@ -1,4 +1,4 @@
-from hiplan.base.member.py import Member
+from hiplan.base.member import Member
 from typing import List
 
 class Task:
