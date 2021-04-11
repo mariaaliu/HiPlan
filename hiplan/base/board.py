@@ -1,6 +1,7 @@
 from hiplan.base.member import Member
 from hiplan.base.record import Record
 from typing import List
+import json
 
 class Board:
     def __init__(self, name = "Untitled", records = None, description = "", members = None):
@@ -24,5 +25,7 @@ class Board:
     def serialize(self):
         return {
             'name': self.name,
-            'records': [record.serialize() for record in self.records]
+            'records': [record.serialize() for record in self.records],
+            'description': self.description,
+            #'members': [member.serialize() for member in self.members]
         }

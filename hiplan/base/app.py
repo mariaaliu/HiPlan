@@ -33,3 +33,14 @@ class App:
     def save_to_file(self, file_name:str = "App.json"):
         with open(file_name, "w") as f:
             f.write(json.dumps(self.serialize()))
+
+    @staticmethod
+    def deserialize(file_name:str = "App.json")
+        with open(file_name, 'r') as f:
+            app_data = json.load(f)
+        
+        for field in app_data.keys():
+            
+
+
+

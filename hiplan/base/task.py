@@ -1,5 +1,7 @@
 from hiplan.base.member import Member
 from typing import List
+from datetime import datetime
+import json
 
 class Task:
     def __init__(self, title = "No title", description = '', deadline = None, members = None, goals = None, labels = None):
@@ -12,6 +14,14 @@ class Task:
 
     def serialize(self):
         return {
-            'title': self.title
-
+            'title': self.title,
+            'description': self.description,
+            'deadline': self.deadline.strftime("%m/%d/%Y, %H:%M:%S"),
+            #'members': [member.serialize() for member in self.members]
+            #'goals': [goal.serialize() for goal in self.goals],
+            #'labels': [label.serialize() for label in self.labels]
         }
+
+    # @staticmethod
+    # def deserialize()
+
