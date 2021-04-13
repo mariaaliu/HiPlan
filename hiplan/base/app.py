@@ -33,3 +33,12 @@ class App:
     def save_to_file(self, file_name:str = "App.json"):
         with open(file_name, "w") as f:
             f.write(json.dumps(self.serialize()))
+
+    @staticmethod
+    def deserialize(dictionary):
+        app = App.get_instance()
+        for board in dictionary['boards']:
+            app.add_board(Board.deserialize(board))
+
+        return app
+            
