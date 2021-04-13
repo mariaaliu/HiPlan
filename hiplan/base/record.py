@@ -25,3 +25,21 @@ class Record:
             #'progress_items': [progress_item.serialize() for progress_item in self.progress_items],
             'priority': self.priority.value
         }
+
+    @staticmethod
+    def deserialize(dict):
+        record = Record(name=dict['name'], tasks=None, labels=None, progress_items=None, priority=dict['priority'])
+        record.task = []
+        record.labels = []
+        record.progress_items = []
+
+        for task in dict['tasks']:
+            record.add_tasks(Task.deserialize(task))
+
+        return record
+
+        # self.name = dict['name']
+        # self.tasks = [Task.deserialize(task) for task in dict['tasks']]
+        # self.labels = [Label.deserialize(label) for label in dict['labels']]
+        # self.progress_items = [Progress_item.deserialize(progress_item) for progress_item in dict['progress_items']]
+        # self.priority.value = dict['priority']

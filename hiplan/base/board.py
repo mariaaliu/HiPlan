@@ -26,6 +26,22 @@ class Board:
         return {
             'name': self.name,
             'records': [record.serialize() for record in self.records],
-            'description': self.description,
+            'description': self.description
             #'members': [member.serialize() for member in self.members]
         }
+
+    @staticmethod
+    def deserialize(dict):
+        board = Board(name=dict['name'], records=None, description=dict['description'], members=None)
+        board.records = []
+        board.members = []
+
+        for record in dict['records']:
+            board.add_record(Record.deserialize(record))
+        
+        # for member in dict['members']:
+        #     board.add_members(Member.deserialize(member))
+
+        return board
+        # self.records = [Record.deserialize(record) for record in dict['records']]
+        # self.members = [Member.deserialize(member) for member in dict['members']]

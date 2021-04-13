@@ -6,3 +6,5 @@ app.add_board()
 app.boards[0].add_record()
 app.boards[0].records[0].add_tasks()
 app.save_to_file()
+
+app.deserialize(app.serialize())

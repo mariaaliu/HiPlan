@@ -35,12 +35,9 @@ class App:
             f.write(json.dumps(self.serialize()))
 
     @staticmethod
-    def deserialize(file_name:str = "App.json")
-        with open(file_name, 'r') as f:
-            app_data = json.load(f)
-        
-        for field in app_data.keys():
+    def deserialize(dict):
+        App.__instance.boards = []
+        for board in dict['boards']:
+            App.__instance.add_board(Board.deserialize(board))
+        # App.__instance.boards = [Board.deserialize(board) for board in dict['boards']]
             
-
-
-
