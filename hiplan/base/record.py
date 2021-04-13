@@ -27,13 +27,10 @@ class Record:
         }
 
     @staticmethod
-    def deserialize(dict):
-        record = Record(name=dict['name'], tasks=None, labels=None, progress_items=None, priority=dict['priority'])
-        record.task = []
-        record.labels = []
-        record.progress_items = []
+    def deserialize(dictionary):
+        record = Record(name=dictionary['name'], tasks=None, labels=None, progress_items=None, priority=Priority(dictionary['priority']))
 
-        for task in dict['tasks']:
+        for task in dictionary['tasks']:
             record.add_tasks(Task.deserialize(task))
 
         return record

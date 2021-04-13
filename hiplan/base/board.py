@@ -31,12 +31,10 @@ class Board:
         }
 
     @staticmethod
-    def deserialize(dict):
-        board = Board(name=dict['name'], records=None, description=dict['description'], members=None)
-        board.records = []
-        board.members = []
+    def deserialize(dictionary):
+        board = Board(name=dictionary['name'], records=None, description=dictionary['description'], members=None)
 
-        for record in dict['records']:
+        for record in dictionary['records']:
             board.add_record(Record.deserialize(record))
         
         # for member in dict['members']:

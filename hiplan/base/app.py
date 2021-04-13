@@ -35,9 +35,9 @@ class App:
             f.write(json.dumps(self.serialize()))
 
     @staticmethod
-    def deserialize(dict):
+    def deserialize(dictionary):
         App.__instance.boards = []
-        for board in dict['boards']:
-            App.__instance.add_board(Board.deserialize(board))
+        for board in dictionary['boards']:
+            App.get_instance.add_board(Board.deserialize(board))
         # App.__instance.boards = [Board.deserialize(board) for board in dict['boards']]
             
