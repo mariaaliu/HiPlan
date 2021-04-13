@@ -7,7 +7,7 @@ class Task:
     def __init__(self, title = "No title", description = '', deadline = None, members = None, goals = None, labels = None):
         self.title = title
         self.description = description
-        self.deadline: datetime = deadline
+        self.deadline: datetime = deadline or datetime.now()
         self.members: List[Member] = members or []
         self.goals: List["Goal"] = goals or []
         self.labels: List["Label"] = labels or []
@@ -16,7 +16,7 @@ class Task:
         return {
             'title': self.title,
             'description': self.description,
-            'deadline': self.deadline.strftime("%d/%m/%Y, %H:%M:%S") or None,
+            'deadline': self.deadline.strftime("%d/%m/%Y, %H:%M:%S") if self.deadline else None
             # 'members': [member.serialize() for member in self.members]
             # 'goals': [goal.serialize() for goal in self.goals],
             # 'labels': [label.serialize() for label in self.labels]

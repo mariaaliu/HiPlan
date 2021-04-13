@@ -36,8 +36,9 @@ class App:
 
     @staticmethod
     def deserialize(dictionary):
-        App.__instance.boards = []
+        app = App.get_instance()
         for board in dictionary['boards']:
-            App.get_instance.add_board(Board.deserialize(board))
-        # App.__instance.boards = [Board.deserialize(board) for board in dict['boards']]
+            app.add_board(Board.deserialize(board))
+
+        return app
             
