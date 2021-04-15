@@ -13,8 +13,8 @@ class Task:
         self.description = description
         self.deadline: datetime = deadline or datetime.now()
         self.members: List[Member] = members or []
-        self.goals: List["Goal"] = goals or []
-        self.labels: List["Label"] = labels or []
+        self.goals: List[Goal] = goals or []
+        self.labels: List[str] = labels or []
         self.progress_status = progress_status
 
     def serialize(self):
