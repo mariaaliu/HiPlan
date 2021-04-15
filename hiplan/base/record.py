@@ -1,10 +1,11 @@
 from hiplan.base.task import Task
 from hiplan.base.priority import Priority
+from hiplan.base.progress_item import ProgressItem
 from typing import List
 import json
 
 class Record:
-    def __init__(self, name = "Untitled", tasks = None, labels = None, progress_items = None, priority = Priority.NONE):
+    def __init__(self, name: str = "Untitled", tasks: Task = None, labels: str = None, progress_items: ProgressItem= None, priority: Priority = Priority.NONE):
         self.name = name
         self.tasks: List[Task] = tasks or []
         self.labels: List["Label"] = labels or []
