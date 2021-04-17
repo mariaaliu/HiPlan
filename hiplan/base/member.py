@@ -1,5 +1,6 @@
 import enum
 from hiplan.base.task import Task
+from hiplan.base.progress_status import ProgressStatus
 
 class Member:
     def __init__(self, name, email):
