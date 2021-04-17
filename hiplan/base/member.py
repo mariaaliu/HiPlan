@@ -15,7 +15,7 @@ class Member:
         else:
             task.progress_status = ProgressStatus.SOLVED
     
-    def serialize(self)
+    def serialize(self):
         return {
             'name': self.name,
             'email': self.email
