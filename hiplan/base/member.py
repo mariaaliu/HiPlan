@@ -1,6 +1,6 @@
-import enum
 # from hiplan.base.task import Task
-from hiplan.base.progress_status import ProgressStatus
+# from hiplan.base.progress_status import ProgressStatus
+
 
 class Member:
     def __init__(self, name, email):
@@ -15,7 +15,7 @@ class Member:
     #         raise Exception("The task was already solved")
     #     else:
     #         task.progress_status = ProgressStatus.SOLVED
-    
+
     def serialize(self):
         return {
             'name': self.name,

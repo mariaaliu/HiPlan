@@ -2,10 +2,10 @@ from hiplan.base.task import Task
 from hiplan.base.priority import Priority
 from hiplan.base.progress_item import ProgressItem
 from typing import List
-import json
+
 
 class Record:
-    def __init__(self, name: str = "Untitled", tasks: Task = None, labels: str = None, progress_items: ProgressItem= None, priority: Priority = Priority.NONE):
+    def __init__(self, name: str = "Untitled", tasks: Task = None, labels: str = None, progress_items: ProgressItem = None, priority: Priority = Priority.NONE):
         self.name = name
         self.tasks: List[Task] = tasks or []
         self.labels: List[str] = labels or []
@@ -22,8 +22,8 @@ class Record:
         return {
             'name': self.name,
             'tasks': [task.serialize() for task in self.tasks],
-            #'labels': [label.serialize() for label in self.labels],
-            #'progress_items': [progress_item.serialize() for progress_item in self.progress_items],
+            # 'labels': [label.serialize() for label in self.labels],
+            'progress_items': [progress_item.serialize() for progress_item in self.progress_items],
             'priority': self.priority.value
         }
 

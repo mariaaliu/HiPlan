@@ -3,8 +3,7 @@ from hiplan.base.progress_status import ProgressStatus
 from hiplan.base.goal import Goal
 from typing import List
 from datetime import datetime
-import json
-import enum
+
 
 class Task:
 
@@ -30,14 +29,5 @@ class Task:
     @staticmethod
     def deserialize(dictionary: dict):
         task = Task(title=dictionary['title'], description=dictionary['description'], deadline=dictionary['deadline'], members=None, goals=None, labels=None)
-        
+
         return task
-
-
-        # self.title = dict['title']
-        # self.description = dict['description']
-        # self.deadline = dict['deadline']
-        # self.members = [Member.deserialize(member) for member in dict['members']]
-        # self.goals = [Goal.deserialize(goal) for goal in dict['goals']]
-        # self.labels = [Label.deserialize(label) for label in dict['labels']]
-
