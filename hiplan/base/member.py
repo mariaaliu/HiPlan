@@ -1,5 +1,5 @@
 import enum
-from hiplan.base.task import Task
+# from hiplan.base.task import Task
 from hiplan.base.progress_status import ProgressStatus
 
 class Member:
@@ -7,14 +7,14 @@ class Member:
         self.name = name
         self.email = email
 
-    def solve_task(self, task: Task):
-        if not isinstance(task, Task):
-            raise Exception("{} is not a task".format(task))
+    # def solve_task(self, task: Task):
+    #     if not isinstance(task, Task):
+    #         raise Exception("{} is not a task".format(task))
 
-        if task.progress_status is ProgressStatus.SOLVED:
-            raise Exception("The task was already solved")
-        else:
-            task.progress_status = ProgressStatus.SOLVED
+    #     if task.progress_status == ProgressStatus.SOLVED:
+    #         raise Exception("The task was already solved")
+    #     else:
+    #         task.progress_status = ProgressStatus.SOLVED
     
     def serialize(self):
         return {
