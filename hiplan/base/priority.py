@@ -1,5 +1,6 @@
 import enum
 
+
 class Priority(enum.Enum):
     NONE = 0
     LOWEST = 1
