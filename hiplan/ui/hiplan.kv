@@ -1,0 +1,67 @@
+#:kivy 2.0.0
+
+<BoardIcon>:
+    size_hint: None, None
+    size: dp(400), dp(200) 
+    canvas.before: 
+        Color:
+            rgba: 0.392, 0.215, 0.312, 1
+        
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+        text_color: 0, 0, 0, 1
+        text: 'cv'
+        pos_hint: {'top': 0.8, 'right': 0.2}
+
+
+<BoardScreen>:
+    # screen layout
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'home'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                icon: 'home'
+                size_hint_x: None
+                col: 1
+                theme_text_color: 'Custom'
+                icon_color: 1, 0, 0, 1
+
+            # MDIconButton:
+
+        # body
+        RelativeLayout:  
+            size_hint: 1, 0.95
+            BoardIcon:
+                pos_hint: {'top': 0.9, 'right': 0.3}
+            BoardIcon:
+                pos_hint: {'top': 0.9, 'right': 0.6}
+            BoardIcon:
+                pos_hint: {'top': 0.9, 'right': 0.9}
+            BoardIcon:
+                pos_hint: {'top': 0.4, 'right': 0.3}
+
+        # board icon
+                
