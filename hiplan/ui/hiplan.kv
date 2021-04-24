@@ -2,10 +2,11 @@
 
 <BoardIcon>:
     size_hint: None, None
-    size: dp(400), dp(200) 
+    size: dp(180), dp(90)
+    # width: 200
     canvas.before: 
         Color:
-            rgba: 0.392, 0.215, 0.312, 1
+            rgba: 0.321, 0.254, 0.424, 1
         
         Rectangle:
             pos: self.pos
@@ -13,7 +14,7 @@
 
     Label:
         text_color: 0, 0, 0, 1
-        text: 'cv'
+        text: 'board'
         pos_hint: {'top': 0.8, 'right': 0.2}
 
 
@@ -38,7 +39,7 @@
                     size: self.size
 
             MDIconButton:
-                icon: 'home'
+                icon: 'settings'
                 size_hint_x: None
                 col: 0
 
@@ -52,16 +53,20 @@
             # MDIconButton:
 
         # body
-        RelativeLayout:  
+        StackLayout:  
             size_hint: 1, 0.95
+            orientation: 'lr-tb'
+            padding: 10, 20, 10, 20
+            spacing: 20, 20
             BoardIcon:
-                pos_hint: {'top': 0.9, 'right': 0.3}
+                text: 'board1'
+                # pos_hint: {'top': 0.9, 'right': 0.3}
             BoardIcon:
-                pos_hint: {'top': 0.9, 'right': 0.6}
+                text: 'board2'
+                # pos_hint: {'top': 0.9, 'right': 0.6}
             BoardIcon:
-                pos_hint: {'top': 0.9, 'right': 0.9}
+                text: 'board3'
+                # pos_hint: {'top': 0.9, 'right': 0.9}
             BoardIcon:
-                pos_hint: {'top': 0.4, 'right': 0.3}
-
-        # board icon
-                
+                text: 'board4'
+                # pos_hint: {'top': 0.4, 'right': 0.3}
