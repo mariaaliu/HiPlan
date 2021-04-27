@@ -8,9 +8,11 @@ from kivy.uix.stacklayout import StackLayout
 class BoardScreen(Screen):
     pass
 
-class BoardIcon(StackLayout):
+class BoardIcon(Button):
     pass
 
+class NewBoardIcon(Button):
+    pass
 
 class HiPlanApp(App):
     def __init__(self, **kwargs):
