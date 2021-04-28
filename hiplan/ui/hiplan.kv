@@ -1,27 +1,36 @@
 #:kivy 2.0.0
 
 <BoardIcon>:
-    size_hint: None, None
-    size: dp(160), dp(90)
-    # width: 200
-    # canvas.before: 
-    #     Color:
-    #         rgba: 0.321, 0.254, 0.424, 1
+
+<RecordList>:
+    orientation: 'tb-lr'
+    # height: self.minimum_height
+    width: self.parent.width
+    BoxLayout:
+        orientation: 'horizontal'
+        size: 0, dp(20)
+        size_hint: 1, None
+
+        Label:
+            text: "List"
+            color: 1, 0, 0, 1
+
+        MDIconButton:
+            icon: 'menu'
+
+    # ScrollView:
+    MDList:
+        size_hint: 1, 1
+        TwoLineListItem:
+            text: "Two-line item"
+            secondary_text: "Secondary text here"
         
-    #     Rectangle:
-    #         pos: self.pos
-    #         size: self.size
+        TwoLineListItem:
+            text: "Two-line item"
+            secondary_text: "Secondary text here"
 
-    # Label:
-    #     text_color: 0, 0, 0, 1
-    #     text: 'board'
-    #     pos_hint: {'top': 0.8, 'right': 0.2}
 
-<NewBoardIcon>:
-    size_hint: None, None
-    size: dp(160), dp(90)
-
-<BoardScreen>:
+<HomeScreen>:
     # screen layout
     BoxLayout:
         orientation: 'vertical'
@@ -56,26 +65,54 @@
             # MDIconButton:
 
         # body
-        StackLayout:  
+        StackLayout: 
+            id: boards_layout 
             size_hint: 1, 0.95
             orientation: 'lr-tb'
             padding: 10, 20, 10, 20
             spacing: 16, 16
-            BoardIcon:
-                text: 'Board 1'
-                background_normal: 'board1.png'
-            BoardIcon:
-                text: 'Board 2'
-                background_normal: 'board2.jpg'
-            BoardIcon:
-                text: 'Board 3'
-                background_normal: 'white.png'
-                background_color: 0, 0.416, 0.583, 1
-            BoardIcon:
-                text: 'Board 4'
-                background_normal: 'white.png'
-                background_color: 0.356, 0.299, 0.344, 1
-            NewBoardIcon:
-                background_color: 0.321, 0.254, 0.424, 1
-                background_normal: 'white.png'
-                text: '+ New Board'
+
+<Boardscreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'settings'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                icon: 'home'
+                size_hint_x: None
+                col: 1
+                theme_text_color: 'Custom'
+                icon_color: 1, 0, 0, 1
+
+            # MDIconButton:
+
+        # body
+        ScrollView:
+            do_scroll_x: True
+            do_scroll_y: False
+
+            StackLayout: 
+                size_hint: 1, 0.95
+                orientation: 'lr-tb'
+                padding: 10, 20, 10, 20
+                spacing: 16, 16
+                RecordList:
