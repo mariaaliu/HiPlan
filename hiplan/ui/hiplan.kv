@@ -8,19 +8,33 @@
     width: self.parent.width
     BoxLayout:
         orientation: 'horizontal'
-        size: 0, dp(20)
+        size: 0, dp(40)
         size_hint: 1, None
+        canvas.before: 
+            Color:
+                rgba: 0, 0.5, 0.5, 1
+            
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
         Label:
             text: "List"
-            color: 1, 0, 0, 1
 
         MDIconButton:
             icon: 'menu'
 
     # ScrollView:
     MDList:
-        size_hint: 1, 1
+        size_hint: 1, None
+        canvas.before: 
+            Color:
+                rgba: 0.333, 0.333, 0.333, 1
+            
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
         TwoLineListItem:
             text: "Two-line item"
             secondary_text: "Secondary text here"
@@ -108,11 +122,14 @@
         # body
         ScrollView:
             do_scroll_x: True
-            do_scroll_y: False
+            do_scroll_y: True
 
             StackLayout: 
                 size_hint: 1, 0.95
                 orientation: 'lr-tb'
                 padding: 10, 20, 10, 20
                 spacing: 16, 16
+                RecordList:
+                RecordList:
+                RecordList:
                 RecordList:
