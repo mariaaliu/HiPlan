@@ -4,8 +4,9 @@
 
 <RecordList>:
     orientation: 'tb-lr'
-    # height: self.minimum_height
-    width: self.parent.width
+    height: self.parent.height
+    size_hint: None, None
+    size_hint_x: 1
     BoxLayout:
         orientation: 'horizontal'
         size: 0, dp(40)
@@ -39,6 +40,10 @@
             text: "Two-line item"
             secondary_text: "Secondary text here"
         
+        TwoLineListItem:
+            text: "Two-line item"
+            secondary_text: "Secondary text here"
+
         TwoLineListItem:
             text: "Two-line item"
             secondary_text: "Secondary text here"
@@ -117,19 +122,123 @@
                 theme_text_color: 'Custom'
                 icon_color: 1, 0, 0, 1
 
-            # MDIconButton:
-
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: 1 
+            size_hint_y: 0.085
+            
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                id: board_label
+                text_color: 0, 0, 1, 1
+                text: 'Board'
         # body
-        ScrollView:
-            do_scroll_x: True
-            do_scroll_y: True
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.830
 
-            StackLayout: 
-                size_hint: 1, 0.95
-                orientation: 'lr-tb'
-                padding: 10, 20, 10, 20
-                spacing: 16, 16
-                RecordList:
-                RecordList:
-                RecordList:
-                RecordList:
+            ScrollView:
+                do_scroll_x: True
+                do_scroll_y: False
+                scroll_x: 0
+                always_overscroll: True
+                # viewport_size: 1, 1
+                scroll_type: ['bars', 'content']
+                # scroll_distance: 200*0.9
+                # scroll_wheel_distance: 200*0.9
+
+                GridLayout: 
+                    size_hint: 1, 0.95
+                    size_hint_x: None
+                    rows: 1
+                    width: self.minimum_width
+                    padding: 10, 20, 0, 20
+                    spacing: 16, 16
+                    col_default_width: root.width*0.9
+
+                    RecordList:
+                    RecordList:
+                    RecordList:
+                    RecordList:
+
+<TaskScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'settings'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                icon: 'home'
+                size_hint_x: None
+                col: 1
+                theme_text_color: 'Custom'
+                icon_color: 1, 0, 0, 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: 1 
+            size_hint_y: 0.085
+            
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                id: board_label
+                text_color: 0, 0, 1, 1
+                text: 'Task'
+        # body
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.830
+            GridLayout:
+                cols: 1
+                # title: str = "No title", description: str = '', deadline: datetime = None, members: Member = None, goals: Goal = None, labels: str = None, progress_status: ProgressStatus = ProgressStatus.UNSOLVED
+                TextInput:
+                    id: task_title
+                    multiline: False
+                    hint_text: 'Task title'
+                    height: self.minimum_height
+                    size_hint_y: None
+                    pos_hint_y: {'top': 1} 
+
+                TextInput:
+                    id: task_description
+                    multiline: True
+                    hint_text: 'Task description'
+                    height: self.minimum_height
+                    size_hint_y: None
+
+                TaskDeadline:
+                    id: task_deadline
+                    multiline: False
+                    height: self.minimum_height
+                    size_hint_y: None
+
