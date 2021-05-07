@@ -42,8 +42,6 @@ class HomeScreen(Screen):
             )
         )
 
-
-
 class BoardIcon(Button):
     def __init__(self, **kwargs):
         background = kwargs.pop('background')
@@ -57,14 +55,39 @@ class BoardIcon(Button):
             self.background_normal = background.image
 
 class BoardScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        records = App.get_running_app().app.boards[0].records
+        for record in records:
+            self.ids.record_layout.add_widget(
+                RecordList(
+                    title = record.name,
+                )
+            )
+            tasks = record.tasks
+            for task in tasks:
+                self.ids.task_layout.add_widget(
+                    TwoLineListItem(
+                        text = task.title,
+                        secondary_text = task.description
+                    )
+                )
 
 class RecordList(StackLayout):
-    pass
+    def __init__(self, title, **kwargs):
+        super().__init__(**kwargs)
+        self.title = title
+        self.size_hint = (None, None)
+        self.size_hint_x = 1
+        self.ids.list_title.add_widget(
+            Label(
+                text = self.title
+            )
+        )
 
 class TaskDeadline(TextInput):
     def __init__(self, **kwargs):
-        self.callback = kwargs.pop('callback')
+        # self.callback = kwargs.pop('callback')
         super().__init__(**kwargs)
 
     def on_touch_down(self, touch):
@@ -79,12 +102,12 @@ class TaskDeadline(TextInput):
 
     def update_deadline(self, picked_date, instance, picked_time):
         print(picked_date, picked_time)
-        self.callback(date_time.combine(picked_date, picked_time))
+        # self.callback(date_time.combine(picked_date, picked_time))
 
 class TaskScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        layout.add_widget(TaskDeadline(multiline=False, callback=self.update_deadline))
+        # layout.add_widget(TaskDeadline(multiline=False, callback=self.update_deadline))
 
     def update_deadline(self, picked_deadline):
         self.task.deadline = picked_deadline
@@ -96,8 +119,9 @@ class HiPlanApp(App):
         self.app = BackendApp.read_from_file()
 
     def build(self):
-        self.screen_manager.add_widget(screen=TaskScreen(name='board-screen'))
+        self.screen_manager.add_widget(screen=BoardScreen(name='board-screen'))
         self.screen_manager.current = 'board-screen'
+        
         return self.screen_manager
 
     

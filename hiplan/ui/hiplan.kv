@@ -8,6 +8,7 @@
     size_hint: None, None
     size_hint_x: 1
     BoxLayout:
+        id: list_title
         orientation: 'horizontal'
         size: 0, dp(40)
         size_hint: 1, None
@@ -27,6 +28,7 @@
 
     # ScrollView:
     MDList:
+        id: task_layout
         size_hint: 1, None
         canvas.before: 
             Color:
@@ -39,15 +41,10 @@
         TwoLineListItem:
             text: "Two-line item"
             secondary_text: "Secondary text here"
-        
-        TwoLineListItem:
-            text: "Two-line item"
-            secondary_text: "Secondary text here"
 
-        TwoLineListItem:
-            text: "Two-line item"
-            secondary_text: "Secondary text here"
-
+        MDIconButton:
+            icon: 'plus'
+            size_hint: 0.9, None
 
 <HomeScreen>:
     # screen layout
@@ -129,7 +126,7 @@
             
             canvas.before: 
                 Color:
-                    rgba: 0.303, 0.322, 0.374, 1
+                    rgba: 0.353, 0.214, 0.431, 1
                 
                 Rectangle:
                     pos: self.pos
@@ -154,6 +151,7 @@
                 # scroll_wheel_distance: 200*0.9
 
                 GridLayout: 
+                    id: record_layout
                     size_hint: 1, 0.95
                     size_hint_x: None
                     rows: 1
@@ -205,7 +203,7 @@
             
             canvas.before: 
                 Color:
-                    rgba: 0.303, 0.322, 0.374, 1
+                    rgba: 0.353, 0.214, 0.431, 1
                 
                 Rectangle:
                     pos: self.pos
@@ -239,6 +237,7 @@
                 TaskDeadline:
                     id: task_deadline
                     multiline: False
+                    hint_text: 'Deadline'
                     height: self.minimum_height
                     size_hint_y: None
 
