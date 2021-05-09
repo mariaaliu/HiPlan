@@ -28,13 +28,14 @@ class HomeScreen(Screen):
         super().__init__(**kwargs)
         boards = App.get_running_app().app.boards
         for board in boards:
-            self.ids.boards_layout.add_widget(
-                BoardIcon(
+            button = BoardIcon(
                     text=board.name,
-                    background=board.background
+                    background=board.background,
+                    board=board
                 )
-            )
-        
+            self.ids.boards_layout.add_widget(button)
+            button.bind(on_press = self.callback)
+
         self.ids.boards_layout.add_widget(
             BoardIcon(
                 text = '+ New Board',
@@ -46,6 +47,7 @@ class BoardIcon(Button):
     def __init__(self, **kwargs):
         background = kwargs.pop('background')
         super().__init__(**kwargs)
+        self.board = kwargs.pop['board']
         self.size_hint = (None, None)
         self.size = (dp(160), dp(90)) 
         if background.type == Background.BackgroundType.COLOR:
@@ -53,15 +55,24 @@ class BoardIcon(Button):
             self.background_normal = 'white.png'
         else:
             self.background_normal = background.image
+    
+    def callback(self):
+        self.screen_manager.add_widget(screen=BoardScreen(board=self.board, name=self.board.name))
+        self.screen_manager.current = self.board.name
+        
+        return self.screen_manager
+
 
 class BoardScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        records = App.get_running_app().app.boards[0].records
+        self.board = kwargs.pop['board']
+        records = board.records
         for record in records:
             self.ids.record_layout.add_widget(
                 RecordList(
                     title = record.name,
+                    record = record
                 )
             )
             tasks = record.tasks
@@ -69,7 +80,8 @@ class BoardScreen(Screen):
                 self.ids.task_layout.add_widget(
                     TwoLineListItem(
                         text = task.title,
-                        secondary_text = task.description
+                        secondary_text = task.description,
+                        task = task
                     )
                 )
 
