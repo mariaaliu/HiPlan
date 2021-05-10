@@ -15,7 +15,7 @@ from functools import partial
 from kivymd.uix.picker import MDDatePicker, MDTimePicker
 
 
-from hiplan.base.board import Background
+from hiplan.base.board import Background, Board
 from hiplan.base.app import App as BackendApp
 
 # Config.set('graphics', 'width', '90')
@@ -44,8 +44,9 @@ class HomeScreen(Screen):
         )
     
     def callback(self, board):
-        self.screen_manager.add_widget(screen=BoardScreen(board=board, name=board.name))
-        self.screen_manager.current = self.board.name
+        App.get_running_app().screen_manager = ScreenManager()
+        App.get_running_app().screen_manager.add_widget(screen=BoardScreen(board=board, name=board.name))
+        App.get_running_app().screen_manager.current = self.board.name
         
         return self.screen_manager
 
@@ -63,7 +64,7 @@ class BoardIcon(Button):
             self.background_normal = background.image
 
 class BoardScreen(Screen):
-    def __init__(self, board, **kwargs):
+    def __init__(self, board: Board, **kwargs):
         super().__init__(**kwargs)
         records = self.board.records
         for record in records:
