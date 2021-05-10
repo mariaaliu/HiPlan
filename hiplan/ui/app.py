@@ -34,7 +34,7 @@ class HomeScreen(Screen):
                     board=board
                 )
             self.ids.boards_layout.add_widget(button)
-            button.bind(on_press = self.callback)
+            button.bind(on_press = self.callback(board=board))
 
         self.ids.boards_layout.add_widget(
             BoardIcon(
@@ -42,12 +42,18 @@ class HomeScreen(Screen):
                 background = Background(color=(0.321, 0.254, 0.424))
             )
         )
+    
+    def callback(self, board):
+        self.screen_manager.add_widget(screen=BoardScreen(board=board, name=board.name))
+        self.screen_manager.current = self.board.name
+        
+        return self.screen_manager
 
 class BoardIcon(Button):
-    def __init__(self, **kwargs):
+    def __init__(self, board, **kwargs):
         background = kwargs.pop('background')
         super().__init__(**kwargs)
-        self.board = kwargs.pop['board']
+        self.board = board
         self.size_hint = (None, None)
         self.size = (dp(160), dp(90)) 
         if background.type == Background.BackgroundType.COLOR:
@@ -55,24 +61,15 @@ class BoardIcon(Button):
             self.background_normal = 'white.png'
         else:
             self.background_normal = background.image
-    
-    def callback(self):
-        self.screen_manager.add_widget(screen=BoardScreen(board=self.board, name=self.board.name))
-        self.screen_manager.current = self.board.name
-        
-        return self.screen_manager
-
 
 class BoardScreen(Screen):
-    def __init__(self, **kwargs):
+    def __init__(self, board, **kwargs):
         super().__init__(**kwargs)
-        self.board = kwargs.pop['board']
-        records = board.records
+        records = self.board.records
         for record in records:
             self.ids.record_layout.add_widget(
                 RecordList(
-                    title = record.name,
-                    record = record
+                    record=record
                 )
             )
             tasks = record.tasks
@@ -81,19 +78,18 @@ class BoardScreen(Screen):
                     TwoLineListItem(
                         text = task.title,
                         secondary_text = task.description,
-                        task = task
                     )
                 )
 
 class RecordList(StackLayout):
-    def __init__(self, title, **kwargs):
+    def __init__(self, record, **kwargs):
         super().__init__(**kwargs)
-        self.title = title
+        self.record = record
         self.size_hint = (None, None)
         self.size_hint_x = 1
         self.ids.list_title.add_widget(
             Label(
-                text = self.title
+                text=self.record.name
             )
         )
 
@@ -131,7 +127,7 @@ class HiPlanApp(App):
         self.app = BackendApp.read_from_file()
 
     def build(self):
-        self.screen_manager.add_widget(screen=BoardScreen(name='board-screen'))
+        self.screen_manager.add_widget(screen=HomeScreen(name='board-screen'))
         self.screen_manager.current = 'board-screen'
         
         return self.screen_manager
