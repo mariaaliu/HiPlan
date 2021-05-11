@@ -1,5 +1,9 @@
 from kivymd.app import MDApp as App
+from kivymd.uix.list import TwoLineListItem
+from kivymd.uix.button import MDIconButton, MDFlatButton
+from kivymd.uix.gridlayout import MDGridLayout
 from kivy.uix.button import Button
+from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.stacklayout import StackLayout
@@ -13,6 +17,8 @@ from kivy.core.window import Window
 from datetime import date, timedelta
 from functools import partial
 from kivymd.uix.picker import MDDatePicker, MDTimePicker
+from kivymd.uix.behaviors import RectangularElevationBehavior
+from kivy.graphics import Line, Color
 
 
 from hiplan.base.board import Background, Board
@@ -26,6 +32,7 @@ Window.size = (350, 600)
 class HomeScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.screen_manager = App.get_running_app().screen_manager
         boards = App.get_running_app().app.boards
         for board in boards:
             button = BoardIcon(
@@ -34,29 +41,44 @@ class HomeScreen(Screen):
                     board=board
                 )
             self.ids.boards_layout.add_widget(button)
-            button.bind(on_press = self.callback(board=board))
+            button.bind(on_press = self.callback)
 
-        self.ids.boards_layout.add_widget(
-            BoardIcon(
-                text = '+ New Board',
-                background = Background(color=(0.321, 0.254, 0.424))
-            )
-        )
+        new_board_btn = BoardIcon(
+                            text = '+ New Board',
+                            background = Background(color=(0.321, 0.254, 0.424))
+                        )
+        self.ids.boards_layout.add_widget(new_board_btn)
+        new_board_btn.bind(on_press = lambda *args: BackendApp.get_instance().add_board())
     
-    def callback(self, board):
-        App.get_running_app().screen_manager = ScreenManager()
-        App.get_running_app().screen_manager.add_widget(screen=BoardScreen(board=board, name=board.name))
-        App.get_running_app().screen_manager.current = self.board.name
-        
-        return self.screen_manager
+    def callback(self, instance):
+        self.screen_manager.add_widget(screen=BoardScreen(board=instance.board, name=instance.board.name))
+        self.screen_manager.current = instance.board.name
+
+def add_gradient(widget, palette):
+    alpha_channel_rate = 0
+    increase_rate = 1 / widget.width
+
+    palette_values = []
+    for i in range(widget.width):
+        palette_values.append([max(value+i/30.0, 1) for value in palette])
+
+    for sep, pos in zip(palette_values, range(widget.width)):
+        widget.canvas.add(Color(rgba=(*sep, 1)))
+        widget.canvas.add(Line(points=[pos, 0, pos, widget.height], width=1))
+
+class BaseShadowWidget(Widget):
+    pass
 
 class BoardIcon(Button):
-    def __init__(self, board, **kwargs):
+    def __init__(self, **kwargs):
         background = kwargs.pop('background')
+        self.board = kwargs.pop('board', None)
         super().__init__(**kwargs)
-        self.board = board
         self.size_hint = (None, None)
-        self.size = (dp(160), dp(90)) 
+        # self.size = (dp(160), dp(90)) 
+        # self.height = dp(90)
+        self.size_hint_x = 0.5
+        self.size_hint_y = 0.2
         if background.type == Background.BackgroundType.COLOR:
             self.background_color = (*background.color, 1)
             self.background_normal = 'white.png'
@@ -64,35 +86,50 @@ class BoardIcon(Button):
             self.background_normal = background.image
 
 class BoardScreen(Screen):
-    def __init__(self, board: Board, **kwargs):
+    def __init__(self, **kwargs):
+        self.board = kwargs.pop('board')
         super().__init__(**kwargs)
+        self.screen_manager = ScreenManager()
         records = self.board.records
         for record in records:
-            self.ids.record_layout.add_widget(
-                RecordList(
-                    record=record
-                )
-            )
-            tasks = record.tasks
-            for task in tasks:
-                self.ids.task_layout.add_widget(
-                    TwoLineListItem(
-                        text = task.title,
-                        secondary_text = task.description,
-                    )
-                )
+            record_list = RecordList(
+                            record=record,
+                        )
+            self.ids.record_layout.add_widget(record_list)
+            # record_list.height = record_list.parent.height
+        self.ids.board_label.text = self.board.name
+            
+
+class RecordLayout(RectangularElevationBehavior, BaseShadowWidget, MDGridLayout):
+    pass
 
 class RecordList(StackLayout):
-    def __init__(self, record, **kwargs):
+    def __init__(self, **kwargs):
+        self.record = kwargs.pop('record')
         super().__init__(**kwargs)
-        self.record = record
         self.size_hint = (None, None)
         self.size_hint_x = 1
+        self.size_hint_y = 1
         self.ids.list_title.add_widget(
             Label(
-                text=self.record.name
+                text=self.record.name,
             )
         )
+        tasks = self.record.tasks
+        for task in tasks:
+            self.ids.task_layout.add_widget(
+                TwoLineListItem(
+                    text = task.title,
+                    secondary_text = task.description,
+                )
+            )
+        new_task_btn = MDIconButton(
+                icon='plus',
+                size_hint= (0.9, None)
+            )
+        self.ids.task_layout.add_widget(new_task_btn)
+        new_task_btn.bind(on_press=self.record.add_tasks)
+
 
 class TaskDeadline(TextInput):
     def __init__(self, **kwargs):

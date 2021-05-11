@@ -2,11 +2,17 @@
 
 <BoardIcon>:
 
+<BaseShadowWidget>:
+    size_hint: None, None
+    size: 100, 100
+    elevation: 25
+    pos_hint: {'center_x': .5}
+
 <RecordList>:
     orientation: 'tb-lr'
-    height: self.parent.height
     size_hint: None, None
     size_hint_x: 1
+    # size_hint_y: 1
     BoxLayout:
         id: list_title
         orientation: 'horizontal'
@@ -19,9 +25,6 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-
-        Label:
-            text: "List"
 
         MDIconButton:
             icon: 'menu'
@@ -38,13 +41,9 @@
                 pos: self.pos
                 size: self.size
 
-        TwoLineListItem:
-            text: "Two-line item"
-            secondary_text: "Secondary text here"
-
-        MDIconButton:
-            icon: 'plus'
-            size_hint: 0.9, None
+        # MDIconButton:
+        #     icon: 'plus'
+        #     size_hint: 0.9, None
 
 <HomeScreen>:
     # screen layout
@@ -88,7 +87,7 @@
             padding: 10, 20, 10, 20
             spacing: 16, 16
 
-<Boardscreen>:
+<BoardScreen>:
     BoxLayout:
         orientation: 'vertical'
         size_hint: 1, 1
@@ -134,7 +133,6 @@
             Label:
                 id: board_label
                 text_color: 0, 0, 1, 1
-                text: 'Board'
         # body
         BoxLayout:
             orientation: 'horizontal'
@@ -156,14 +154,12 @@
                     size_hint_x: None
                     rows: 1
                     width: self.minimum_width
+                    height: self.minimum_height
                     padding: 10, 20, 0, 20
                     spacing: 16, 16
                     col_default_width: root.width*0.9
 
-                    RecordList:
-                    RecordList:
-                    RecordList:
-                    RecordList:
+
 
 <TaskScreen>:
     BoxLayout:
@@ -219,19 +215,17 @@
             GridLayout:
                 cols: 1
                 # title: str = "No title", description: str = '', deadline: datetime = None, members: Member = None, goals: Goal = None, labels: str = None, progress_status: ProgressStatus = ProgressStatus.UNSOLVED
-                TextInput:
+                MDTextFieldRound:
                     id: task_title
                     multiline: False
                     hint_text: 'Task title'
-                    height: self.minimum_height
                     size_hint_y: None
                     pos_hint_y: {'top': 1} 
 
-                TextInput:
+                MDTextFieldRound:
                     id: task_description
                     multiline: True
                     hint_text: 'Task description'
-                    height: self.minimum_height
                     size_hint_y: None
 
                 TaskDeadline:
