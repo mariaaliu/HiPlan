@@ -213,8 +213,24 @@
             orientation: 'horizontal'
             size_hint: 1, 0.830
             GridLayout:
+                id: task_layout
                 cols: 1
+                padding: 30, 20, 30, 20
+                spacing: 10, 10
                 # title: str = "No title", description: str = '', deadline: datetime = None, members: Member = None, goals: Goal = None, labels: str = None, progress_status: ProgressStatus = ProgressStatus.UNSOLVED
+                # TaskDeadline:
+                #     id: task_deadline
+                #     multiline: False
+                #     hint_text: 'Deadline'
+                #     size_hint_y: None
+                
+                MDTextFieldRound:
+                    id: task_progress_status
+                    multiline: True
+                    hint_text: 'Progress: SOLVED / UNSOLVED ?'
+                    size_hint_y: None
+                    pos_hint_y: {'top': 1} 
+
                 MDTextFieldRound:
                     id: task_title
                     multiline: False
@@ -228,10 +244,20 @@
                     hint_text: 'Task description'
                     size_hint_y: None
 
-                TaskDeadline:
-                    id: task_deadline
-                    multiline: False
-                    hint_text: 'Deadline'
-                    height: self.minimum_height
+
+                MDTextFieldRound:
+                    id: task_members
+                    multiline: True
+                    hint_text: 'task_member@email.example'
                     size_hint_y: None
+
+                MDRoundFlatIconButton:
+                    icon: "login"
+                    text: "Open goal list to see your goals"
+                    width: dp(280)
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    md_bg_color: 0.3, 0.56, 1, 1
+                    # pos_hint: {"center_x": .9, "center_y": .9}
+
 

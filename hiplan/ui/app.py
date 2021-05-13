@@ -2,6 +2,7 @@ from kivymd.app import MDApp as App
 from kivymd.uix.list import TwoLineListItem
 from kivymd.uix.button import MDIconButton, MDFlatButton
 from kivymd.uix.gridlayout import MDGridLayout
+from kivymd.uix.textfield import MDTextFieldRound
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -112,7 +113,7 @@ class RecordList(StackLayout):
         self.size_hint_y = 1
         self.ids.list_title.add_widget(
             Label(
-                text=self.record.name,
+                text=self.record.name + '  -  priority: ' + str(self.record.priority.name),
             )
         )
         tasks = self.record.tasks
@@ -130,8 +131,12 @@ class RecordList(StackLayout):
         self.ids.task_layout.add_widget(new_task_btn)
         new_task_btn.bind(on_press=self.record.add_tasks)
 
+class TaskLayout(TwoLineListItem):
+    def __init__(self, **kwargs):
+        self.task = kwargs.pop('task')
+        super().__init__(**kwargs)
 
-class TaskDeadline(TextInput):
+class TaskDeadline(MDTextFieldRound):
     def __init__(self, **kwargs):
         # self.callback = kwargs.pop('callback')
         super().__init__(**kwargs)
@@ -153,10 +158,18 @@ class TaskDeadline(TextInput):
 class TaskScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+
+
+
         # layout.add_widget(TaskDeadline(multiline=False, callback=self.update_deadline))
 
     def update_deadline(self, picked_deadline):
         self.task.deadline = picked_deadline
+
+    # def callback(self, instance):
+    #     self.screen_manager.add_widget(screen=GoalScreen(board=instance.board, name=instance.board.name))
+    #     self.screen_manager.current = instance.board.name
 
 class HiPlanApp(App):
     def __init__(self, **kwargs):
@@ -165,7 +178,7 @@ class HiPlanApp(App):
         self.app = BackendApp.read_from_file()
 
     def build(self):
-        self.screen_manager.add_widget(screen=HomeScreen(name='board-screen'))
+        self.screen_manager.add_widget(screen=TaskScreen(name='board-screen'))
         self.screen_manager.current = 'board-screen'
         
         return self.screen_manager
