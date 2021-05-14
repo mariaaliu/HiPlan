@@ -198,6 +198,7 @@
                 icon_color: 1, 0, 0, 1
 
         BoxLayout:
+            # id: task_label
             orientation: 'horizontal'
             size_hint_x: 1 
             size_hint_y: 0.085
@@ -214,9 +215,9 @@
                 icon: 'close'
 
             Label:
-                id: board_label
+                id: task_label
                 text_color: 0, 0, 1, 1
-                text: 'Task'
+                # text: 'Task'
         # body
         BoxLayout:
             orientation: 'horizontal'
@@ -229,36 +230,36 @@
                 # title: str = "No title", description: str = '', deadline: datetime = None, members: Member = None, goals: Goal = None, labels: str = None, progress_status: ProgressStatus = ProgressStatus.UNSOLVED
                 TaskDeadline:
                     id: task_deadline
-                    multiline: False
-                    hint_text: 'Deadline'
-                    size_hint_y: None
+                    # multiline: False
+                    # hint_text: 'Deadline'
+                    # size_hint_y: None
                 
                 MDTextFieldRound:
                     id: task_progress_status
-                    multiline: True
-                    hint_text: 'Progress: SOLVED / UNSOLVED ?'
-                    size_hint_y: None
-                    pos_hint_y: {'top': 1} 
+                    # multiline: True
+                    # hint_text: 'Progress: SOLVED / UNSOLVED ?'
+                    # size_hint_y: None
+                    # pos_hint_y: {'top': 1} 
 
                 MDTextFieldRound:
                     id: task_title
-                    multiline: False
-                    hint_text: 'Task title'
-                    size_hint_y: None
-                    pos_hint_y: {'top': 1} 
+                    # multiline: False
+                    # hint_text: 'Task title'
+                    # size_hint_y: None
+                    # pos_hint_y: {'top': 1} 
 
                 MDTextFieldRound:
                     id: task_description
-                    multiline: True
-                    hint_text: 'Task description'
-                    size_hint_y: None
+                    # multiline: True
+                    # hint_text: 'Task description'
+                    # size_hint_y: None
 
 
                 MDTextFieldRound:
                     id: task_members
-                    multiline: True
-                    hint_text: 'task_member@email.example'
-                    size_hint_y: None
+                    # multiline: True
+                    # hint_text: 'task_member@email.example'
+                    # size_hint_y: None
 
                 BoxLayout:
                     orientation: 'horizontal'
@@ -332,6 +333,8 @@
 
     IconLeftWidget:
         icon: 'delete'
+
+    RightCheckbox:
 
 <GoalScreen>:
     BoxLayout:
@@ -486,7 +489,7 @@
             Label:
                 id: board_label
                 text_color: 0, 0, 1, 1
-                text: 'Your Attachments:'
+                text: 'Learn Script:'
 
         # body
         BoxLayout:
@@ -509,13 +512,13 @@
                             pos: self.pos
                             size: self.size 
 
-                GoalLayout:
+                AttachmentLayout:
                     text: 'Brainstorming.txt'
-                GoalLayout:
+                AttachmentLayout:
                     text: 'Sketch.docx'
-                GoalLayout:
+                AttachmentLayout:
                     text: 'Speech. M4A'
-                GoalLayout:
+                AttachmentLayout:
                     text: 'Final video.MP4'
 
                 MDFloatingActionButton:

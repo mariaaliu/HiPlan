@@ -160,21 +160,40 @@ class TaskDeadline(MDTextFieldRound):
         clock.open()
 
     def update_deadline(self, picked_date, instance, picked_time):
-        print(picked_date, picked_time)
+        self.text ="Deadline: on " + str(picked_date)+ " at " + str (picked_time)
+        # print(picked_date, picked_time)
         # self.callback(date_time.combine(picked_date, picked_time))
 
 class TaskScreen(Screen):
     def __init__(self, **kwargs):
         self.task = kwargs.pop('task')
         super().__init__(**kwargs)
-        # task_deadline = TaskDeadline()
-        # task_deadline.callback = self.update_deadline
-        # self.ids.task_screen.add_widget(task_deadline)
-        # # layout.add_widget(TaskDeadline(multiline=False, callback=self.update_deadline))
-        # task_progress_status = MDTextFieldRound()
-        # self.ids.task_screen.add_widget(task_progress_status)
-        # task_title = MDTextFieldRound()
+        self.ids.task_label.text = self.task.title
 
+        self.ids.task_deadline.multiline = False
+        self.ids.task_deadline.hint_text = 'Deadline'
+        self.ids.task_deadline.text = str("Deadline: on " + self.task.deadline.strftime("%d/%m/%Y") +" at "+ self.task.deadline.strftime("%H:%M:%S"))
+        self.ids.task_deadline.callback = self.update_deadline
+        self.ids.task_deadline.size_hint_y = None
+
+        self.ids.task_progress_status.multiline = True
+        self.ids.task_progress_status.hint_text = 'Progress: SOLVED / UNSOLVED ?'
+        self.ids.task_progress_status.text = self.task.progress_status.name
+        self.ids.task_progress_status.size_hint_y = None
+
+        self.ids.task_title.multiline = False
+        self.ids.task_title.hint_text = 'Task title'
+        self.ids.task_title.text = self.task.title
+        self.ids.task_title.size_hint_y = None
+
+        self.ids.task_description.multiline = True
+        self.ids.task_description.hint_text = 'Task description'
+        self.ids.task_description.text = self.task.description
+        self.ids.task_description.size_hint_y = None
+
+        self.ids.task_members.multiline = True
+        self.ids.task_members.hint_text = 'task_member@email.example'
+        self.ids.task_members.size_hint_y = None
 
     def update_deadline(self, picked_deadline):
         self.task.deadline = picked_deadline
@@ -204,7 +223,7 @@ class HiPlanApp(App):
         self.app = BackendApp.read_from_file()
 
     def build(self):
-        self.screen_manager.add_widget(screen=AttachmentScreen(name='board-screen'))
+        self.screen_manager.add_widget(screen=HomeScreen(name='board-screen'))
         self.screen_manager.current = 'board-screen'
         
         return self.screen_manager
