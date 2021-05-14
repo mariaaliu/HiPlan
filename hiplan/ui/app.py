@@ -108,6 +108,16 @@ class BoardScreen(Screen):
         self.ids.back.size_hint_x = None
         self.ids.back.bind(on_press = self.back_callback)
 
+        self.ids.home.icon = 'home'
+        self.ids.home.size_hint_x = None
+        self.ids.home.col = 1
+        self.ids.home.theme_text_color = 'Custom'
+        self.ids.home.icon_color = 1, 0, 0, 1
+        self.ids.home.bind(on_press = self.home_callback)
+
+    def home_callback(self, instance):
+        self.screen_manager.current = 'board-screen'
+
     def back_callback(self, instance):
         self.screen_manager.transition.direction = 'right'
         self.screen_manager.current = self.screen_manager.previous()
@@ -227,6 +237,16 @@ class TaskScreen(Screen):
         self.ids.back.size_hint_x = None
         self.ids.back.bind(on_press = self.back_callback)
 
+        self.ids.home.icon = 'home'
+        self.ids.home.size_hint_x = None
+        self.ids.home.col = 1
+        self.ids.home.theme_text_color = 'Custom'
+        self.ids.home.icon_color = 1, 0, 0, 1
+        self.ids.home.bind(on_press = self.home_callback)
+
+    def home_callback(self, instance):
+        self.screen_manager.current = 'board-screen'
+
     def back_callback(self, instance):
         self.screen_manager.transition.direction = 'right'
         self.screen_manager.current = self.screen_manager.previous()
@@ -259,6 +279,16 @@ class GoalScreen(Screen):
         self.ids.back.size_hint_x = None
         self.ids.back.bind(on_press = self.back_callback)
 
+        self.ids.home.icon = 'home'
+        self.ids.home.size_hint_x = None
+        self.ids.home.col = 1
+        self.ids.home.theme_text_color = 'Custom'
+        self.ids.home.icon_color = 1, 0, 0, 1
+        self.ids.home.bind(on_press = self.home_callback)
+
+    def home_callback(self, instance):
+        self.screen_manager.current = 'board-screen'
+
     def back_callback(self, instance):
         self.screen_manager.transition.direction = 'right'
         self.screen_manager.current = self.screen_manager.previous() 
@@ -276,6 +306,16 @@ class AttachmentScreen(Screen):
         self.ids.back.icon = "close"
         self.ids.back.size_hint_x = None
         self.ids.back.bind(on_press = self.back_callback)
+
+        self.ids.home.icon = 'home'
+        self.ids.home.size_hint_x = None
+        self.ids.home.col = 1
+        self.ids.home.theme_text_color = 'Custom'
+        self.ids.home.icon_color = 1, 0, 0, 1
+        self.ids.home.bind(on_press = self.home_callback)
+
+    def home_callback(self, instance):
+        self.screen_manager.current = 'board-screen'
 
     def back_callback(self, instance):
         self.screen_manager.transition.direction = 'right'
