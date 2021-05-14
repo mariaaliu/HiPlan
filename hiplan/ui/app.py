@@ -94,6 +94,7 @@ class BoardScreen(Screen):
     def __init__(self, **kwargs):
         self.board = kwargs.pop('board')
         super().__init__(**kwargs)
+        self.screen_manager = App.get_running_app().screen_manager
         records = self.board.records
         for record in records:
             record_list = RecordList(
@@ -102,6 +103,14 @@ class BoardScreen(Screen):
             self.ids.record_layout.add_widget(record_list)
             # record_list.height = record_list.parent.height
         self.ids.board_label.text = self.board.name
+
+        self.ids.back.icon = "close"
+        self.ids.back.size_hint_x = None
+        self.ids.back.bind(on_press = self.back_callback)
+
+    def back_callback(self, instance):
+        self.screen_manager.transition.direction = 'right'
+        self.screen_manager.current = self.screen_manager.previous()
             
 
 class RecordLayout(RectangularElevationBehavior, BaseShadowWidget, MDGridLayout):
@@ -136,6 +145,7 @@ class RecordList(StackLayout):
         self.ids.task_layout.add_widget(new_task_btn)
         new_task_btn.bind(on_press=self.record.add_tasks)
         # new_board_btn.bind(on_press = lambda *args: BackendApp.get_instance().add_board())
+
     def callback(self, instance):
         self.screen_manager.add_widget(screen=TaskScreen(task=instance.task, name=instance.task.title))
         self.screen_manager.current = instance.task.title
@@ -197,7 +207,6 @@ class TaskScreen(Screen):
         self.ids.task_members.hint_text = 'task_member@email.example'
         self.ids.task_members.size_hint_y = None
 
-
         self.ids.open_goals.icon = "login"
         self.ids.open_goals.text = "Open goal list to see your goals"
         self.ids.open_goals.width = dp(280)
@@ -214,6 +223,13 @@ class TaskScreen(Screen):
         self.ids.open_attachments.md_bg_color = (0.3, 0.56, 1, 1)
         self.ids.open_attachments.bind(on_press = self.attachment_callback)
 
+        self.ids.back.icon = "close"
+        self.ids.back.size_hint_x = None
+        self.ids.back.bind(on_press = self.back_callback)
+
+    def back_callback(self, instance):
+        self.screen_manager.transition.direction = 'right'
+        self.screen_manager.current = self.screen_manager.previous()
 
     def update_deadline(self, picked_deadline):
         self.task.deadline = picked_deadline
@@ -236,7 +252,16 @@ class GoalScreen(Screen):
     def __init__(self, **kwargs):
         # self.task = kwargs.pop('goal')
         super().__init__(**kwargs)
+        self.screen_manager = App.get_running_app().screen_manager
         self.ids.goal_label.text = "Goals: "
+        
+        self.ids.back.icon = "close"
+        self.ids.back.size_hint_x = None
+        self.ids.back.bind(on_press = self.back_callback)
+
+    def back_callback(self, instance):
+        self.screen_manager.transition.direction = 'right'
+        self.screen_manager.current = self.screen_manager.previous() 
 
 class AttachmentLayout(OneLineAvatarIconListItem):
     pass
@@ -245,7 +270,16 @@ class AttachmentScreen(Screen):
     def __init__(self, **kwargs):
         # self.task = kwargs.pop('goal')
         super().__init__(**kwargs)
+        self.screen_manager = App.get_running_app().screen_manager
         self.ids.attachment_label.text = "Attachments: "
+
+        self.ids.back.icon = "close"
+        self.ids.back.size_hint_x = None
+        self.ids.back.bind(on_press = self.back_callback)
+
+    def back_callback(self, instance):
+        self.screen_manager.transition.direction = 'right'
+        self.screen_manager.current = self.screen_manager.previous()
 
 class HiPlanApp(App):
     def __init__(self, **kwargs):

@@ -133,7 +133,8 @@
                     size: self.size
             
             IconLeftWidget:
-                icon: 'close'
+                id: back
+                # icon: 'close'
 
             Label:
                 id: board_label
@@ -212,7 +213,8 @@
                     size: self.size
 
             IconLeftWidget:
-                icon: 'close'
+                id: back
+                # icon: 'close'
 
             Label:
                 id: task_label
@@ -281,45 +283,6 @@
                     # theme_text_color: "Custom"
                     # text_color: 1, 1, 1, 1
                     # md_bg_color: 0.3, 0.56, 1, 1
-                
-                # # Attachmant list
-                # StackLayout:
-                #     orientation: 'tb-lr'
-                #     size_hint: None, None
-                #     size_hint_x: 1
-                #     height: self.parent.height 
-                #     BoxLayout:
-                #         id: list_title
-                #         orientation: 'horizontal'
-                #         size: 0, dp(40)
-                #         size_hint: 1, None
-                #         canvas.before: 
-                #             Color:
-                #                 rgba: 0.3, 0.56, 1, 1
-                            
-                #             Rectangle:
-                #                 pos: self.pos
-                #                 size: self.size
-
-                #         MDIconButton:
-                #             icon: 'attachment'
-
-                #         Label:
-                #             text: 'Attachments:'
-
-                #     MDList:
-                #         id: task_layout
-                #         size_hint: 1, None
-                #         canvas.before: 
-                #             Color:
-                #                 rgba: 0.333, 0.333, 0.333, 1
-                            
-                #             Rectangle:
-                #                 pos: self.pos
-                #                 size: self.size
-                        
-                #         TwoLineListItem:
-                #             text: 'Attachment name'
 
 
 <GoalLayout>:
@@ -383,8 +346,9 @@
                     size: self.size
 
             MDIconButton:
-                icon: 'close'
-                size_hint_x: None
+                id: back
+                # icon: 'close'
+                # size_hint_x: None
 
             Label:
                 id: goal_label
@@ -485,8 +449,9 @@
                     size: self.size
 
             MDIconButton:
-                icon: 'close'
-                size_hint_x: None
+                id: back
+                # icon: 'close'
+                # size_hint_x: None
 
             Label:
                 id: attachment_label
