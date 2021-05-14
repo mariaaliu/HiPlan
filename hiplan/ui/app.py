@@ -3,6 +3,9 @@ from kivymd.uix.list import TwoLineListItem
 from kivymd.uix.button import MDIconButton, MDFlatButton
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.textfield import MDTextFieldRound
+from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
+from kivymd.uix.selectioncontrol import MDCheckbox
+from kivymd.icon_definitions import md_icons
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -90,7 +93,6 @@ class BoardScreen(Screen):
     def __init__(self, **kwargs):
         self.board = kwargs.pop('board')
         super().__init__(**kwargs)
-        self.screen_manager = ScreenManager()
         records = self.board.records
         for record in records:
             record_list = RecordList(
@@ -108,6 +110,7 @@ class RecordList(StackLayout):
     def __init__(self, **kwargs):
         self.record = kwargs.pop('record')
         super().__init__(**kwargs)
+        self.screen_manager = App.get_running_app().screen_manager
         self.size_hint = (None, None)
         self.size_hint_x = 1
         self.size_hint_y = 1
@@ -118,18 +121,23 @@ class RecordList(StackLayout):
         )
         tasks = self.record.tasks
         for task in tasks:
-            self.ids.task_layout.add_widget(
-                TwoLineListItem(
+            task_btn = TaskLayout(
                     text = task.title,
                     secondary_text = task.description,
+                    task = task
                 )
-            )
+            self.ids.task_layout.add_widget(task_btn)
+            task_btn.bind(on_press = self.callback)
         new_task_btn = MDIconButton(
                 icon='plus',
                 size_hint= (0.9, None)
             )
         self.ids.task_layout.add_widget(new_task_btn)
         new_task_btn.bind(on_press=self.record.add_tasks)
+        # new_board_btn.bind(on_press = lambda *args: BackendApp.get_instance().add_board())
+    def callback(self, instance):
+        self.screen_manager.add_widget(screen=TaskScreen(task=instance.task, name=instance.task.title))
+        self.screen_manager.current = instance.task.title
 
 class TaskLayout(TwoLineListItem):
     def __init__(self, **kwargs):
@@ -157,12 +165,16 @@ class TaskDeadline(MDTextFieldRound):
 
 class TaskScreen(Screen):
     def __init__(self, **kwargs):
+        self.task = kwargs.pop('task')
         super().__init__(**kwargs)
+        # task_deadline = TaskDeadline()
+        # task_deadline.callback = self.update_deadline
+        # self.ids.task_screen.add_widget(task_deadline)
+        # # layout.add_widget(TaskDeadline(multiline=False, callback=self.update_deadline))
+        # task_progress_status = MDTextFieldRound()
+        # self.ids.task_screen.add_widget(task_progress_status)
+        # task_title = MDTextFieldRound()
 
-
-
-
-        # layout.add_widget(TaskDeadline(multiline=False, callback=self.update_deadline))
 
     def update_deadline(self, picked_deadline):
         self.task.deadline = picked_deadline
@@ -170,6 +182,20 @@ class TaskScreen(Screen):
     # def callback(self, instance):
     #     self.screen_manager.add_widget(screen=GoalScreen(board=instance.board, name=instance.board.name))
     #     self.screen_manager.current = instance.board.name
+class RightCheckbox(IRightBodyTouch, MDCheckbox):
+    pass
+
+class GoalLayout(OneLineAvatarIconListItem):
+    pass
+
+class GoalScreen(Screen):
+    pass
+
+class AttachmentLayout(OneLineAvatarIconListItem):
+    pass
+
+class AttachmentScreen(Screen):
+    pass
 
 class HiPlanApp(App):
     def __init__(self, **kwargs):
@@ -178,7 +204,7 @@ class HiPlanApp(App):
         self.app = BackendApp.read_from_file()
 
     def build(self):
-        self.screen_manager.add_widget(screen=TaskScreen(name='board-screen'))
+        self.screen_manager.add_widget(screen=AttachmentScreen(name='board-screen'))
         self.screen_manager.current = 'board-screen'
         
         return self.screen_manager
