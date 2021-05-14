@@ -1,3 +1,4 @@
+from hiplan.base.task import Task
 from kivymd.app import MDApp as App
 from kivymd.uix.list import TwoLineListItem
 from kivymd.uix.button import MDIconButton, MDFlatButton
@@ -168,6 +169,7 @@ class TaskScreen(Screen):
     def __init__(self, **kwargs):
         self.task = kwargs.pop('task')
         super().__init__(**kwargs)
+        self.screen_manager = App.get_running_app().screen_manager
         self.ids.task_label.text = self.task.title
 
         self.ids.task_deadline.multiline = False
@@ -195,12 +197,35 @@ class TaskScreen(Screen):
         self.ids.task_members.hint_text = 'task_member@email.example'
         self.ids.task_members.size_hint_y = None
 
+
+        self.ids.open_goals.icon = "login"
+        self.ids.open_goals.text = "Open goal list to see your goals"
+        self.ids.open_goals.width = dp(280)
+        self.ids.open_goals.theme_text_color = "Custom"
+        self.ids.open_goals.text_color = (1, 1, 1, 1)
+        self.ids.open_goals.md_bg_color = (0.3, 0.56, 1, 1)
+        self.ids.open_goals.bind(on_press = self.goal_callback)
+
+        self.ids.open_attachments.icon = "attachment"
+        self.ids.open_attachments.text = "Open your list of attachments"
+        self.ids.open_attachments.width = dp(280)
+        self.ids.open_attachments.theme_text_color = "Custom"
+        self.ids.open_attachments.text_color = (1, 1, 1, 1)
+        self.ids.open_attachments.md_bg_color = (0.3, 0.56, 1, 1)
+        self.ids.open_attachments.bind(on_press = self.attachment_callback)
+
+
     def update_deadline(self, picked_deadline):
         self.task.deadline = picked_deadline
 
-    # def callback(self, instance):
-    #     self.screen_manager.add_widget(screen=GoalScreen(board=instance.board, name=instance.board.name))
-    #     self.screen_manager.current = instance.board.name
+    def goal_callback(self, instance):
+        self.screen_manager.add_widget(screen=GoalScreen(name="Goals"))
+        self.screen_manager.current = "Goals"
+
+    def attachment_callback(self, instance):
+        self.screen_manager.add_widget(screen=AttachmentScreen(name="Attachments"))
+        self.screen_manager.current = "Attachments"
+
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
     pass
 
@@ -208,13 +233,19 @@ class GoalLayout(OneLineAvatarIconListItem):
     pass
 
 class GoalScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        # self.task = kwargs.pop('goal')
+        super().__init__(**kwargs)
+        self.ids.goal_label.text = "Goals: "
 
 class AttachmentLayout(OneLineAvatarIconListItem):
     pass
 
 class AttachmentScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        # self.task = kwargs.pop('goal')
+        super().__init__(**kwargs)
+        self.ids.attachment_label.text = "Attachments: "
 
 class HiPlanApp(App):
     def __init__(self, **kwargs):

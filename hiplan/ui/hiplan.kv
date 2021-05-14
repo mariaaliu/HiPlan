@@ -265,20 +265,22 @@
                     orientation: 'horizontal'
 
                 MDRoundFlatIconButton:
-                    icon: "login"
-                    text: "Open goal list to see your goals"
-                    width: dp(280)
-                    theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
-                    md_bg_color: 0.3, 0.56, 1, 1
+                    id: open_goals
+                    # icon: "login"
+                    # text: "Open goal list to see your goals"
+                    # width: dp(280)
+                    # theme_text_color: "Custom"
+                    # text_color: 1, 1, 1, 1
+                    # md_bg_color: 0.3, 0.56, 1, 1
 
                 MDRoundFlatIconButton:
-                    icon: "attachment"
-                    text: "Open your list of attachments"
-                    width: dp(280)
-                    theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
-                    md_bg_color: 0.3, 0.56, 1, 1
+                    id: open_attachments
+                    # icon: "attachment"
+                    # text: "Open your list of attachments"
+                    # width: dp(280)
+                    # theme_text_color: "Custom"
+                    # text_color: 1, 1, 1, 1
+                    # md_bg_color: 0.3, 0.56, 1, 1
                 
                 # # Attachmant list
                 # StackLayout:
@@ -385,9 +387,9 @@
                 size_hint_x: None
 
             Label:
-                id: board_label
-                text_color: 0, 0, 1, 1
-                text: 'Goals'
+                id: goal_label
+                # text_color: 0, 0, 1, 1
+                # text: 'Goals'
 
         # body
         BoxLayout:
@@ -487,9 +489,9 @@
                 size_hint_x: None
 
             Label:
-                id: board_label
-                text_color: 0, 0, 1, 1
-                text: 'Learn Script:'
+                id: attachment_label
+                # text_color: 0, 0, 1, 1
+                # text: 'Attachments:'
 
         # body
         BoxLayout:
