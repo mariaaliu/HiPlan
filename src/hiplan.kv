@@ -1,0 +1,566 @@
+#:kivy 1.11.1
+
+
+<AddBoardScreen>:
+    # screen layout
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'settings'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                icon: 'home'
+                size_hint_x: None
+                col: 1
+                theme_text_color: 'Custom'
+                icon_color: 1, 0, 0, 1
+
+            # MDIconButton:
+
+        # body
+        StackLayout: 
+            id: main_layout 
+            size_hint: 1, 0.95
+            orientation: 'lr-tb'
+            padding: 10, 20, 10, 20
+            spacing: 50, 50
+
+
+            MDTextField:
+                id: board_name
+                hint_text: "Board name"
+                size_hint_y: 0.1
+
+                
+            MDLabel:
+                text: "Board color"
+                id: color_preview
+                size_hint_y: 0.05
+                halign: "center"
+                bold: True
+
+            CustomColorWheel:
+                size_hint_y: 0.4
+                id: color_wheel
+
+            FloatLayout:
+                MDFloatingActionButton:
+                    icon: "check-bold"
+                    id: done
+                    elevation_normal: 12
+                    pos_hint: {"center_x": 0.5, "top": 0.8}
+                    md_bg_color: 0.27, 0.85, 0.37, 1
+
+
+            
+
+<BoardIcon>:
+
+<BaseShadowWidget>:
+    size_hint: None, None
+    size: 100, 100
+    elevation: 25
+    pos_hint: {'center_x': .5}
+
+<RecordList>:
+    orientation: 'tb-lr'
+    size_hint: None, None
+    size_hint_x: 1
+    # size_hint_y: 1
+    BoxLayout:
+        id: list_title
+        orientation: 'horizontal'
+        size: 0, dp(40)
+        size_hint: 1, None
+        canvas.before: 
+            Color:
+                rgba: 0, 0.5, 0.5, 1
+            
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        MDIconButton:
+            icon: 'menu'
+
+    # ScrollView:
+    MDList:
+        id: task_layout
+        size_hint: 1, None
+        canvas.before: 
+            Color:
+                rgba: 0.888, 0.888, 0.888, 1
+            
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # MDIconButton:
+        #     icon: 'plus'
+        #     size_hint: 0.9, None
+
+<HomeScreen>:
+    # screen layout
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'settings'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                icon: 'home'
+                size_hint_x: None
+                col: 1
+                theme_text_color: 'Custom'
+                icon_color: 1, 0, 0, 1
+
+            # MDIconButton:
+
+        # body
+        StackLayout: 
+            id: boards_layout 
+            size_hint: 1, 0.95
+            orientation: 'lr-tb'
+            padding: 10, 20, 10, 20
+            spacing: 16, 16
+
+<BoardScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'settings'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                id: home
+                # icon: 'home'
+                # size_hint_x: None
+                # col: 1
+                # theme_text_color: 'Custom'
+                # icon_color: 1, 0, 0, 1
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: 1 
+            size_hint_y: 0.085
+            
+            canvas.before: 
+                Color:
+                    rgba: 0.353, 0.214, 0.431, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            
+            IconLeftWidget:
+                id: back
+                # icon: 'close'
+
+            Label:
+                id: board_label
+                text_color: 0, 0, 1, 1
+        # body
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.830
+
+            ScrollView:
+                do_scroll_x: True
+                do_scroll_y: False
+                scroll_x: 0
+                always_overscroll: True
+                # viewport_size: 1, 1
+                scroll_type: ['bars', 'content']
+                # scroll_distance: self.parent.width
+                # scroll_wheel_distance: 200*0.9
+
+                GridLayout: 
+                    id: record_layout
+                    size_hint: 1, 0.95
+                    size_hint_x: None
+                    rows: 1
+                    width: self.minimum_width
+                    height: self.minimum_height
+                    padding: 10, 20, 0, 20
+                    spacing: 16, 16
+                    col_default_width: root.width*0.9
+
+
+
+<TaskScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'settings'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                id: home
+                # icon: 'home'
+                # size_hint_x: None
+                # col: 1
+                # theme_text_color: 'Custom'
+                # icon_color: 1, 0, 0, 1
+
+        BoxLayout:
+            # id: task_label
+            orientation: 'horizontal'
+            size_hint_x: 1 
+            size_hint_y: 0.085
+            
+            canvas.before: 
+                Color:
+                    rgba: 0.353, 0.214, 0.431, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            IconLeftWidget:
+                id: back
+                # icon: 'close'
+
+            Label:
+                id: task_label
+                text_color: 0, 0, 1, 1
+                # text: 'Task'
+        # body
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.830
+            GridLayout:
+                id: task_screen
+                cols: 1
+                padding: 30, 20, 30, 20
+                spacing: 30, 30
+                # title: str = "No title", description: str = '', deadline: datetime = None, members: Member = None, goals: Goal = None, labels: str = None, progress_status: ProgressStatus = ProgressStatus.UNSOLVED
+                MDTextFieldRound:
+                    id: task_title
+                    # multiline: False
+                    # hint_text: 'Task title'
+                    # size_hint_y: None
+                    # pos_hint_y: {'top': 1} 
+
+                
+                MDTextFieldRound:
+                    id: task_description
+                    # multiline: True
+                    # hint_text: 'Task description'
+                    # size_hint_y: None
+
+                
+                TaskDeadline:
+                    id: task_deadline
+                    size_hint_y: self.minimum_height
+                    # multiline: False
+                    # hint_text: 'Deadline'
+                    # size_hint_y: None
+
+
+                MDTextFieldRound:
+                    id: task_members
+                    # multiline: True
+                    # hint_text: 'task_member@email.example'
+                    # size_hint_y: None
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                MDRoundFlatIconButton:
+                    id: open_goals
+                    # icon: "login"
+                    # text: "Open goal list to see your goals"
+                    # width: dp(280)
+                    # theme_text_color: "Custom"
+                    # text_color: 1, 1, 1, 1
+                    # md_bg_color: 0.3, 0.56, 1, 1
+
+                MDRoundFlatIconButton:
+                    id: open_attachments
+                    # icon: "attachment"
+                    # text: "Open your list of attachments"
+                    # width: dp(280)
+                    # theme_text_color: "Custom"
+                    # text_color: 1, 1, 1, 1
+                    # md_bg_color: 0.3, 0.56, 1, 1
+
+
+
+<GoalLayout>:
+    id: goal_name
+    text: 'Your goal'
+    canvas.before: 
+        Color:
+            rgba: 0.3, 0.56, 1, 1
+        
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    IconLeftWidget:
+        icon: 'delete'
+
+    RightCheckbox:
+
+<GoalScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'settings'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                id: home
+                # icon: 'home'
+                # size_hint_x: None
+                # col: 1
+                # theme_text_color: 'Custom'
+                # icon_color: 1, 0, 0, 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: 1 
+            size_hint_y: 0.085
+            
+            canvas.before: 
+                Color:
+                    rgba: 0.353, 0.214, 0.431, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                id: back
+                # icon: 'close'
+                # size_hint_x: None
+
+            Label:
+                id: goal_label
+                # text_color: 0, 0, 1, 1
+                # text: 'Goals'
+
+        # body
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.830
+            GridLayout:
+                id: goal_screen
+                cols: 1
+                padding: 10, 20, 10, 20
+                spacing: 10, 10
+                # name, progress_status=ProgressStatus.UNSOLVED 
+
+                MDList:
+                    id: task_layout
+                    size_hint: 1, None
+                    canvas.before: 
+                        Color:
+                            rgba: 0.333, 0.333, 0.333, 1
+                        
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size 
+
+                GoalLayout:
+                    text: 'Brainstorm'
+                GoalLayout:
+                    text: 'Sketch for speech'
+                GoalLayout:
+                    text: 'Record speech'
+                GoalLayout:
+                    text: 'Edit for final touches'
+
+                MDFloatingActionButton:
+                    icon: "plus"
+                    md_bg_color: app.theme_cls.primary_color
+
+<AttachmentLayout>:
+    id: attachment_list
+    text: 'Attachment'
+    canvas.before: 
+        Color:
+            rgba: 0.3, 0.56, 1, 1
+        
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    IconLeftWidget:
+        icon: 'delete'
+
+<AttachmentScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+
+        # toolbar
+        GridLayout:
+            cols: 5
+            cols_minimum: {0: 20, 1: 50}
+            size_hint: 1, 0.085
+
+            canvas.before: 
+                Color:
+                    rgba: 0.303, 0.322, 0.374, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                icon: 'settings'
+                size_hint_x: None
+                col: 0
+
+            MDIconButton:
+                id: home
+                # icon: 'home'
+                # size_hint_x: None
+                # col: 1
+                # theme_text_color: 'Custom'
+                # icon_color: 1, 0, 0, 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: 1 
+            size_hint_y: 0.085
+            
+            canvas.before: 
+                Color:
+                    rgba: 0.353, 0.214, 0.431, 1
+                
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDIconButton:
+                id: back
+                # icon: 'close'
+                # size_hint_x: None
+
+            Label:
+                id: attachment_label
+                # text_color: 0, 0, 1, 1
+                # text: 'Attachments:'
+
+        # body
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.830
+            GridLayout:
+                id: goal_screen
+                cols: 1
+                padding: 10, 20, 10, 20
+                spacing: 10, 10
+
+                MDList:
+                    id: task_layout
+                    size_hint: 1, None
+                    canvas.before: 
+                        Color:
+                            rgba: 0.333, 0.333, 0.333, 1
+                        
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size 
+
+                AttachmentLayout:
+                    text: 'Brainstorming.txt'
+                AttachmentLayout:
+                    text: 'Sketch.docx'
+                AttachmentLayout:
+                    text: 'Speech. M4A'
+                AttachmentLayout:
+                    text: 'Final video.MP4'
+
+                MDFloatingActionButton:
+                    icon: "plus"
+                    md_bg_color: app.theme_cls.primary_color

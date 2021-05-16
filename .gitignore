@@ -1,5 +1,6 @@
 # json extensions
 *.json
+.buildozer
 
 # Bythe-compiled / optimized / DLL files
 __pycache__/
